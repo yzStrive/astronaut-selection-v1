@@ -292,8 +292,10 @@ export default function Home() {
                   )}
                 </>
               ) : (
-                <div
+                <a
+                  target="_blank"
                   className={styles.pickBtn}
+                  rel="noopener noreferrer"
                   onClick={RollTheDice}
                   style={
                     isPicking
@@ -303,9 +305,22 @@ export default function Home() {
                       : {}
                   }
                 >
-                  <span className={styles.pickText}>PICK ASTRONAUT</span>
-                  <Image src="/assets/img/btn.png" alt="Logo" layout="fill" />
-                </div>
+                  <div className={styles.pickBtnIcon1}>
+                    <Image
+                      src="/assets/img/icon-double_arrow.png"
+                      layout="fill"
+                      alt=""
+                    />
+                  </div>
+                  PICK ASTRONAUT
+                  <div className={styles.pickBtnIcon2}>
+                    <Image
+                      src="/assets/img/icon-Vector.png"
+                      layout="fill"
+                      alt=""
+                    />
+                  </div>
+                </a>
               )}
               <div className={styles.astronautListWrapper}>
                 {validWinnerList.map((item, index) => {

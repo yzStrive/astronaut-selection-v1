@@ -81,13 +81,41 @@
   color: #fff;
   font-size: 4rem;
 }
+
 .pickBtn {
-  width: 36rem;
-  height: 8rem;
-  min-height: 8rem;
+  font-size: 2rem;
+  width: 32rem;
+  height: 6rem;
+  min-height: 6rem;
   position: relative;
   cursor: pointer;
+  align-items: center;
+  background-image: linear-gradient(90deg, #0affe2, #7f32fc);
+  color: #fff;
+  display: flex;
+  font-weight: 700;
+  justify-content: center;
+  margin-right: 0;
+
+  border-radius: 0.5em;
+  box-shadow: -0.25rem 0.25em 1rem 0.5rem #b7b8b4,
+    0.5rem 0.25rem 0.75rem #f7faf4;
+  padding: 1.5em;
+  text-align: center;
 }
+.pickBtnIcon1 {
+  position: relative;
+  height: 2.5rem;
+  width: 2.5rem;
+  margin: 0 0.5rem;
+}
+.pickBtnIcon2 {
+  position: relative;
+  height: 2rem;
+  width: 2rem;
+  margin: 0 0.5rem;
+}
+
 .pickText {
   font-size: 2rem;
   position: absolute;
