@@ -102,11 +102,11 @@ export default function Home() {
     }
   }, []);
   const fetchRollCounter = useCallback(async () => {
-    const MoonDAOWinnerContract = await getNoRequestContract();
-    const counter = await MoonDAOWinnerContract?.roll_Counter();
-    setCounter(counter.toNumber());
-    return counter.toNumber();
-  }, [getNoRequestContract]);
+    // const MoonDAOWinnerContract = await getNoRequestContract();
+    // const counter = await MoonDAOWinnerContract?.roll_Counter();
+    // setCounter(counter.toNumber());
+    return 10;
+  }, []);
 
   const fetchWinnerList = useCallback(
     async (counter: number) => {
@@ -276,7 +276,7 @@ export default function Home() {
         <main className={styles.main}>
           <div className={styles.left}>
             <div className={styles.leftWrapper}>
-              {validWinnerList.length >= 13 ? (
+              {validWinnerList.length >= 10 ? (
                 <>
                   <span className={styles.congratulations}>
                     Congratulations 🎉🎉🎉
