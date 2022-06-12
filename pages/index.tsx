@@ -41,6 +41,7 @@ Modal.setAppElement("#__next");
 type WinnerType = {
   index: number;
   winner: number;
+  invalid?: boolean;
 };
 export default function Home() {
   const isMobile = useMedia({ maxWidth: "1024px" });
@@ -100,23 +101,28 @@ export default function Home() {
       return new Contract(config.contractAddress, config.contractABI, provider);
     }
   }, []);
+  const fetchRollCounter = useCallback(async () => {
+    const MoonDAOWinnerContract = await getNoRequestContract();
+    const counter = await MoonDAOWinnerContract?.roll_Counter();
+    setCounter(counter.toNumber());
+    return counter.toNumber();
+  }, [getNoRequestContract]);
+
   const fetchWinnerList = useCallback(
     async (counter: number) => {
       try {
         const MoonDAOWinnerContract = await getNoRequestContract();
         const winners: any[] = [];
+        const latestCounter = await fetchRollCounter();
         await Promise.all(
           range(counter).map(async (item) => {
             const rolledNum = await MoonDAOWinnerContract?.diceList(item);
-            if (rolledNum > 0) {
-              const winner = await MoonDAOWinnerContract?.reMapping(rolledNum);
-              if (winner) {
-                winners.push({
-                  index: 10 - item - 1,
-                  winner: winner,
-                });
-              }
-            }
+            const winner = await MoonDAOWinnerContract?.reMapping(rolledNum);
+            winners.push({
+              index: latestCounter - item - 1,
+              winner: winner,
+              invalid: !rolledNum.toNumber(),
+            });
           })
         );
         setWinnerList(winners);
@@ -125,19 +131,14 @@ export default function Home() {
         console.error(e);
       }
     },
-    [getNoRequestContract]
+    [fetchRollCounter, getNoRequestContract]
   );
   const validWinnerList = useMemo(() => {
-    const arrays = winnerList.filter((item) => item.winner > 0);
+    const arrays = winnerList;
     arrays.sort((a, b) => b.index - a.index);
     return arrays;
   }, [winnerList]);
-  const fetchRollCounter = useCallback(async () => {
-    const MoonDAOWinnerContract = await getNoRequestContract();
-    const counter = await MoonDAOWinnerContract?.roll_Counter();
-    setCounter(counter.toNumber());
-    return counter.toNumber();
-  }, [getNoRequestContract]);
+
   const fetchSyncedWinnerList = useCallback(
     async (counter: number) => {
       try {
@@ -275,7 +276,7 @@ export default function Home() {
         <main className={styles.main}>
           <div className={styles.left}>
             <div className={styles.leftWrapper}>
-              {validWinnerList.length >= 10 ? (
+              {validWinnerList.length >= 13 ? (
                 <>
                   <span className={styles.congratulations}>
                     Congratulations 🎉🎉🎉
@@ -334,7 +335,8 @@ export default function Home() {
                         />
                       </div>
                       <span className={styles.astronautNumber}>
-                        No{item.index + 1} #{item.winner}
+                        No{item.index + 1} {!item.invalid && `#${item.winner}`}
+                        {item.invalid && "(Wrong num)"}
                       </span>
                     </div>
                   );
