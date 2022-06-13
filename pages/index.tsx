@@ -142,7 +142,7 @@ export default function Home() {
         winner: item,
       };
     });
-    arrays.sort((a, b) => a.index - b.index);
+    arrays.sort((a, b) => b.index - a.index);
     return arrays;
   }, []);
 
