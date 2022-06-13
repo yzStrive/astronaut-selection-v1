@@ -142,7 +142,7 @@ export default function Home() {
         winner: item,
       };
     });
-    arrays.sort((a, b) => b.index - a.index);
+    // arrays.sort((a, b) => a.index - a.index);
     return arrays;
   }, []);
 
@@ -342,7 +342,7 @@ export default function Home() {
                         />
                       </div>
                       <span className={styles.astronautNumber}>
-                        No{item.index + 1} #{item.winner}
+                        No{10 - item.index} #{item.winner}
                       </span>
                     </div>
                   );
