@@ -134,10 +134,17 @@ export default function Home() {
     [fetchRollCounter, getNoRequestContract]
   );
   const validWinnerList = useMemo(() => {
-    const arrays = winnerList;
-    arrays.sort((a, b) => b.index - a.index);
+    const arrays = [
+      2196, 1044, 4941, 6092, 6366, 4868, 3136, 4877, 1925, 3895,
+    ].map((item, index) => {
+      return {
+        index,
+        winner: item,
+      };
+    });
+    arrays.sort((a, b) => a.index - b.index);
     return arrays;
-  }, [winnerList]);
+  }, []);
 
   const fetchSyncedWinnerList = useCallback(
     async (counter: number) => {
@@ -335,8 +342,7 @@ export default function Home() {
                         />
                       </div>
                       <span className={styles.astronautNumber}>
-                        No{item.index + 1} {!item.invalid && `#${item.winner}`}
-                        {item.invalid && "(Wrong num)"}
+                        No{item.index + 1} #{item.winner}
                       </span>
                     </div>
                   );
